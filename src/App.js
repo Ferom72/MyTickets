@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { UserContext } from "./context/UserContext";
+import LandingPage from "./pages/landingpage/LandingPage";
+import MoreInfo from "./pages/landingpage/sections/webprojects/moreinfo/MoreInfo";
 
 function App() {
+  const [info, setInfo] = useState(null);
+
+  function SetProjectInfo(value) {
+    console.log(value);
+    setInfo(value);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{ info, SetProjectInfo }}>
+      <Routes>
+        <Route exact path="/" element={<LandingPage />} />
+        <Route path="/moreinfo" element={<MoreInfo info={info} />} />
+      </Routes>
+    </UserContext.Provider>
   );
 }
 
